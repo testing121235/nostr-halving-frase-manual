@@ -1,14 +1,18 @@
 from datetime import date
+import requests
 import os
 
-today = date.today()
-last_halving = date(2024, 4, 20)
-next_halving = date(2028, 4, 18)
+# Obtener bloque actual en tiempo real
+response = requests.get("https://mempool.space/api/v1/blocks/tip/height")
+current_block = int(response.text.strip())
 
-days_passed = (today - last_halving).days
-total_days = (next_halving - last_halving).days
-progress = (days_passed / total_days) * 100
-days_remaining = (next_halving - today).days
+last_halving_block = 840000
+next_halving_block = 1050000
+
+blocks_mined = current_block - last_halving_block
+blocks_total = next_halving_block - last_halving_block
+progress = (blocks_mined / blocks_total) * 100
+days_remaining = (next_halving_block - current_block) // 144
 
 segments = 14
 filled = int(progress / 100 * segments)
@@ -20,10 +24,9 @@ Progress: {progress:.2f}%
 
 {bar}
 
-Estimated days remaining: {days_remaining}
+Days remaining: {days_remaining}
 
 One day closer to the halving! ☀️"""
 
-# Siempre publica (porque es manual)
 with open(os.environ["GITHUB_OUTPUT"], "a") as f:
     f.write(f"content<<EOF\n{content}\nEOF\n")
