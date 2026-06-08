@@ -18,7 +18,7 @@ segments = 14
 filled = int(progress / 100 * segments)
 bar = "🟧" * filled + "⬜" * (segments - filled)
 
-content = f"""GM, Bitcoin halving:
+content = f"""GM, Bitcoin halving countdown:
 
 Progress: {progress:.2f}%
 
