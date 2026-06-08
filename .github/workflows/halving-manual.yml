@@ -1,0 +1,28 @@
+name: Halving Frase - MANUAL
+
+on:
+  workflow_dispatch:   # Solo manual, sin schedule automático
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generar frase del halving
+        id: generate
+        run: python3 .github/scripts/halving_phrase.py
+
+      - name: Publicar en NOSTR
+        uses: snow-actions/nostr@v1.8.3
+        with:
+          relays: |
+            wss://relay.damus.io
+            wss://nos.lol
+            wss://nostr.wine
+            wss://relay.primal.net
+          private-key: ${{ secrets.NOSTR_PRIVATE_KEY }}
+          content: ${{ steps.generate.outputs.content }}
+          kind: 1
