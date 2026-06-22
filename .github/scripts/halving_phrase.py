@@ -26,7 +26,7 @@ Progress: {progress:.2f}%
 
 Days remaining: {days_remaining}
 
-One day closer! ☀️ The most secure network completed another flawless day, zero downtime, zero hacks. Study, buy, self custody and talk about Bitcoin"""
+One day closer! ☀️ The most secure network completed another flawless day, zero downtime, zero hacks. Study, buy, self custody and talk about #Bitcoin"""
 
 with open(os.environ["GITHUB_OUTPUT"], "a") as f:
     f.write(f"content<<EOF\n{content}\nEOF\n")
